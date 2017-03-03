@@ -1,0 +1,17 @@
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+
+dist
+pids
+logs
+results
+src/data
+
+npm-debug.log
+node_modules
