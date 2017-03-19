@@ -11,7 +11,7 @@ function Controls (sceneController) {
 
   this.d = new THREE.Vector3()
 
-  this.update = function (delta) {
+  this.update = (delta) => {
     self.controls.update( delta )
   }
 

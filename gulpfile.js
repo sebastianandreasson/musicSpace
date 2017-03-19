@@ -34,6 +34,7 @@ function runBrowserify() {
 
   var bundle = require('browserify')()
     .add('./src/index.js')
+    .transform('babelify', { presets: ['es2015'] })
     .bundle()
     .on('error', function (err) {
         gutil.log(gutil.colors.red('Failed to browserify'), gutil.colors.yellow(err.message));
@@ -90,6 +91,26 @@ function startStaticServer() {
   app.listen(devServer.port, devServer.server, function () {
     gutil.log("opened server on http://" + devServer.server + ":" + devServer.port);
   });
+
+  const SpotifyWebApi = require('spotify-web-api-node')
+  const scopes = ['user-read-private', 'user-read-email']
+  const redirectUri = '/spotiCallback'
+
+  const spotify = new SpotifyWebApi({
+    clientId : '9fab72d81931467e887b1b4b8c12732f',
+    clientSecret : '56ffaa4c427440d89ee96afff745efe2',
+    redirectUri : 'https://example.com/callback'
+  });
+
+  app.get('/spotifyToken', (req, res) => {
+    spotify.clientCredentialsGrant()
+    .then(data => {
+      res.json({
+        access_token: data.body['access_token']
+      })
+    })
+    .then(() => start())
+  })
 
   lr = require('tiny-lr')();
   lr.listen(devServer.livereload);

@@ -12,11 +12,11 @@ function Scene () {
     antialias: false
   })
   this.renderer.setPixelRatio( window.devicePixelRatio )
-	this.renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT )
-	this.renderer.sortObjects = false
+  this.renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT )
+  this.renderer.sortObjects = false
   document.body.appendChild(this.renderer.domElement)
 
-  this.setup = function () {
+  this.setup = () => {
     const dirLight = new THREE.DirectionalLight( 0xffffff )
   	dirLight.position.set( -1, 0, 1 ).normalize()
 
@@ -30,7 +30,7 @@ function Scene () {
     this.clock = new THREE.Clock()
   }
 
-  this.addRenderListener = function(listener) {
+  this.addRenderListener = (listener) => {
     this.listeners.push(listener)
   }
 }
